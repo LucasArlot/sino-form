@@ -1,28 +1,28 @@
 /**
  * Sino Form Popup Integration Script
  * Version: 1.0.0
- * 
+ *
  * Usage:
  * <script src="https://lucasarlot.github.io/sino-form/popup-integration.js"></script>
- * 
+ *
  * SinoFormPopup.open({
  *   onSuccess: (data) => console.log('Form submitted:', data),
  *   onClose: () => console.log('Popup closed')
  * });
  */
 
-(function(global) {
+(function (global) {
   'use strict';
 
   // Configuration
   const CONFIG = {
     baseUrl: 'https://lucasarlot.github.io/sino-form',
-    popupUrl: '/popup.html',
+    popupUrl: '/popup-simple.html', // Utiliser la version simple qui fonctionne
     popupId: 'sino-form-popup',
     overlayId: 'sino-form-overlay',
     iframeId: 'sino-form-iframe',
     zIndex: 999999,
-    animationDuration: 300
+    animationDuration: 300,
   };
 
   // CSS Styles for popup
@@ -123,7 +123,7 @@
   // Utility functions
   function injectStyles() {
     if (document.getElementById('sino-form-styles')) return;
-    
+
     const style = document.createElement('style');
     style.id = 'sino-form-styles';
     style.textContent = POPUP_STYLES;
@@ -147,14 +147,14 @@
   function addEventListeners(overlay, popup, closeBtn, onClose) {
     // Close button click
     closeBtn.addEventListener('click', onClose);
-    
+
     // Overlay click to close
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         onClose();
       }
     });
-    
+
     // Escape key to close
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -163,7 +163,7 @@
       }
     };
     document.addEventListener('keydown', handleKeyDown);
-    
+
     // Prevent body scroll when popup is open
     document.body.style.overflow = 'hidden';
   }
@@ -175,7 +175,7 @@
   function showPopup(overlay, popup) {
     // Force reflow
     overlay.offsetHeight;
-    
+
     overlay.classList.add('show');
     popup.classList.add('show');
   }
@@ -183,7 +183,7 @@
   function hidePopup(overlay, popup, callback) {
     overlay.classList.remove('show');
     popup.classList.remove('show');
-    
+
     setTimeout(() => {
       removeElement(CONFIG.overlayId);
       removeElement(CONFIG.popupId);
@@ -208,7 +208,7 @@
       this.currentCallbacks = {
         onSuccess: options.onSuccess || null,
         onClose: options.onClose || null,
-        onError: options.onError || null
+        onError: options.onError || null,
       };
 
       this.createPopup();
@@ -217,10 +217,10 @@
 
     close() {
       if (!this.isOpen) return;
-      
+
       const overlay = document.getElementById(CONFIG.overlayId);
       const popup = document.getElementById(CONFIG.popupId);
-      
+
       if (overlay && popup) {
         hidePopup(overlay, popup, () => {
           this.isOpen = false;
@@ -238,25 +238,25 @@
 
       // Create overlay
       const overlay = createElement('div', {
-        id: CONFIG.overlayId
+        id: CONFIG.overlayId,
       });
 
       // Create popup container
       const popup = createElement('div', {
-        id: CONFIG.popupId
+        id: CONFIG.popupId,
       });
 
       // Create close button
       const closeBtn = createElement('button', {
         className: 'sino-form-close',
-        title: 'Fermer'
+        title: 'Fermer',
       });
 
       // Create iframe
       const iframe = createElement('iframe', {
         id: CONFIG.iframeId,
         src: CONFIG.baseUrl + CONFIG.popupUrl,
-        allow: 'camera; microphone; geolocation'
+        allow: 'camera; microphone; geolocation',
       });
 
       // Assemble popup
@@ -310,7 +310,7 @@
       };
 
       window.addEventListener('message', handleMessage);
-      
+
       // Store reference to remove listener later
       this.messageHandler = handleMessage;
     }
@@ -345,5 +345,4 @@
   } else {
     console.log('Sino Form Popup Integration loaded');
   }
-
 })(typeof window !== 'undefined' ? window : this);

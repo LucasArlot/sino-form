@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple SINO Form Popup</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .test-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .test-button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            border-left: 4px solid #3b82f6;
+            text-align: center;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            border-left-color: #10b981;
+            color: #065f46;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+            color: #1e40af;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .feature h3 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+        
+        .feature p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Test SINO Form Popup</h1>
+        <p>Testez l'intégration du formulaire en popup - Version Simple</p>
+        
+        <button class="test-button" onclick="openForm()">
+            📝 Ouvrir le Formulaire
+        </button>
+        
+        <div id="status" class="status" style="display: none;">
+            <strong>Statut:</strong> <span id="status-text">En attente...</span>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🎯 Test Local</h3>
+                <p>Fonctionne avec les fichiers locaux</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Responsive</h3>
+                <p>Adapté mobile et desktop</p>
+            </div>
+            <div class="feature">
+                <h3>🔄 Callbacks</h3>
+                <p>Écoute les événements</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script d'intégration -->
+    <script src="./popup-integration.js"></script>
+    
+    <script>
+        function openForm() {
+            updateStatus('Ouverture du formulaire...', 'info');
+            
+            try {
+                if (typeof SinoFormPopup === 'undefined') {
+                    throw new Error('Script d\'intégration non chargé');
+                }
+                
+                SinoFormPopup.open({
+                    onSuccess: (data) => {
+                        updateStatus('✅ Formulaire soumis avec succès!', 'success');
+                        console.log('Données reçues:', data);
+                        
+                        // Afficher les données reçues
+                        setTimeout(() => {
+                            alert('Formulaire soumis!\n\nDonnées reçues:\n' + JSON.stringify(data, null, 2));
+                        }, 500);
+                    },
+                    onClose: () => {
+                        updateStatus('📝 Formulaire fermé', 'info');
+                    },
+                    onError: (error) => {
+                        updateStatus('❌ Erreur: ' + error.message, 'error');
+                        console.error('Erreur:', error);
+                    }
+                });
+                
+                updateStatus('✅ Formulaire ouvert avec succès!', 'success');
+                
+            } catch (error) {
+                updateStatus('❌ Erreur: ' + error.message, 'error');
+                console.error('Erreur:', error);
+            }
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            
+            statusText.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            // Auto-hide after 5 seconds for success/error
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Vérifier si le script est chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof SinoFormPopup !== 'undefined') {
+                updateStatus('✅ Script chargé et prêt!', 'success');
+            } else {
+                updateStatus('❌ Script non trouvé', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
