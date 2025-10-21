@@ -10,53 +10,20 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        embed: resolve(__dirname, 'embed.html'),
-        widget: resolve(__dirname, 'src/widget.ts'),
-        'widget-app': resolve(__dirname, 'widget.html'),
-        'widget-inline': resolve(__dirname, 'src/widget-inline.ts'),
+        embed: resolve(__dirname, 'embed.html')
       },
       output: {
-        manualChunks: (id) => {
-          // Regular chunking for main and embed builds
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('lucide-react')) {
-              return 'ui-icons';
-            }
-          }
-          if (
-            id.includes('@/features/lead/context/i18n') ||
-            id.includes('@/features/lead/context/ports') ||
-            id.includes('@/features/lead/context/types')
-          ) {
-            return 'lead-context';
-          }
-          if (id.includes('@/features/lead/context/QuoteFormContext')) {
-            return 'quote-form-context';
-          }
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'ui-icons': ['lucide-react'],
+          'lead-context': [
+            '@/features/lead/context/i18n',
+            '@/features/lead/context/ports',
+            '@/features/lead/context/types',
+          ],
+          // Ensure the React context module is bundled once and shared
+          'quote-form-context': ['@/features/lead/context/QuoteFormContext'],
         },
-        // Widget-specific output configuration
-        entryFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'widget') {
-            return 'sino-form-widget.js';
-          }
-          if (chunkInfo.name === 'widget-inline') {
-            return 'sino-form-inline.js';
-          }
-          return 'assets/[name]-[hash].js';
-        },
-        chunkFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'widget') {
-            return 'sino-form-widget.js';
-          }
-          if (chunkInfo.name === 'widget-inline') {
-            return 'sino-form-inline.js';
-          }
-          return 'assets/[name]-[hash].js';
-        },
-        format: 'es',
       },
     },
   },
