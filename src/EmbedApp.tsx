@@ -27,23 +27,15 @@ function EmbedApp() {
 
       let newScale = 1;
 
-      // Détecter si c'est un appareil mobile
-      const isMobile = parentWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        // Pas de scaling sur mobile - laisser les CSS responsive faire leur travail
-        newScale = 1;
+      // Breakpoints de scaling
+      if (parentWidth >= 2560) {
+        newScale = 1; // 100% - taille optimale pour 32"
+      } else if (parentWidth >= 1920) {
+        newScale = 0.85; // 85% pour 27"
+      } else if (parentWidth >= 1440) {
+        newScale = 0.75; // 75% pour 24"
       } else {
-        // Breakpoints de scaling pour desktop uniquement
-        if (parentWidth >= 2560) {
-          newScale = 1; // 100% - taille optimale pour 32"
-        } else if (parentWidth >= 1920) {
-          newScale = 0.85; // 85% pour 27"
-        } else if (parentWidth >= 1440) {
-          newScale = 0.75; // 75% pour 24"
-        } else {
-          newScale = 0.65; // 65% pour écrans plus petits
-        }
+        newScale = 0.65; // 65% pour écrans plus petits
       }
 
       setScale(newScale);
@@ -63,26 +55,6 @@ function EmbedApp() {
     };
 
     window.addEventListener('message', handleMessage);
-
-    // Notifier le parent que le formulaire est prêt
-    const notifyParent = () => {
-      try {
-        if (window.parent && window.parent !== window) {
-          window.parent.postMessage({
-            type: 'sino-form-ready',
-            data: {
-              timestamp: new Date().toISOString(),
-              userAgent: navigator.userAgent
-            }
-          }, '*');
-        }
-      } catch (error) {
-        console.warn('Impossible de notifier le parent:', error);
-      }
-    };
-
-    // Notifier après un court délai pour s'assurer que tout est chargé
-    setTimeout(notifyParent, 100);
 
     return () => {
       window.removeEventListener('resize', applyResponsiveScaling);

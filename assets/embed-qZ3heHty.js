@@ -1,1 +1,11 @@
-import{j as r,Q as t,a as o,c as e}from"./main-xiZwCa2h.js";import{r as m}from"./ui-icons-CW1QtAxz.js";import"./react-vendor-BRnhmgIC.js";import"./quote-form-context-C9R7Vhs_.js";import"./lead-context-B3V8kn2n.js";function s(){return r.jsx(t,{children:r.jsx(o,{})})}e.createRoot(document.getElementById("root")).render(r.jsx(m.StrictMode,{children:r.jsx(s,{})}));
+import { j as r, Q as t, a as o, c as e } from './main-xiZwCa2h.js';
+import { r as m } from './ui-icons-CW1QtAxz.js';
+import './react-vendor-BRnhmgIC.js';
+import './quote-form-context-C9R7Vhs_.js';
+import './lead-context-B3V8kn2n.js';
+function s() {
+  return r.jsx(t, { children: r.jsx(o, {}) });
+}
+e.createRoot(document.getElementById('root')).render(
+  r.jsx(m.StrictMode, { children: r.jsx(s, {}) })
+);

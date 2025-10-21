@@ -27,7 +27,10 @@ const StepConfirmation: React.FC<StepConfirmationProps> = ({
 
   const DEFAULT_EN_TEXT: Record<string, string> = {
     confirmationTitle: ctxGetText('confirmationTitle', 'Quote Request Confirmed'),
-    confirmationSubtitle: ctxGetText('confirmationSubtitle', 'Your request has been successfully submitted'),
+    confirmationSubtitle: ctxGetText(
+      'confirmationSubtitle',
+      'Your request has been successfully submitted'
+    ),
     referenceNumber: 'Reference Number',
     yourRequest: 'Your Request Summary',
     shipmentDetails: 'Shipment Details',

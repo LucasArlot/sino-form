@@ -9,16 +9,16 @@ Ce guide explique comment intégrer le formulaire de devis sur vos pages web en 
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Ma Page</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Votre contenu -->
     <button id="openQuoteForm">Demander un devis</button>
-    
+
     <!-- Script d'intégration -->
     <script src="https://votre-domaine.com/scripts/popup-integration.js"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -26,14 +26,14 @@ Ce guide explique comment intégrer le formulaire de devis sur vos pages web en 
 
 ```javascript
 // Méthode simple
-document.getElementById('openQuoteForm').addEventListener('click', function() {
-    openQuoteFormPopup({
-        baseUrl: 'https://votre-domaine.com',
-        onFormSubmit: function(data) {
-            console.log('Formulaire soumis:', data);
-            // Traiter les données ici
-        }
-    });
+document.getElementById('openQuoteForm').addEventListener('click', function () {
+  openQuoteFormPopup({
+    baseUrl: 'https://votre-domaine.com',
+    onFormSubmit: function (data) {
+      console.log('Formulaire soumis:', data);
+      // Traiter les données ici
+    },
+  });
 });
 ```
 
@@ -43,16 +43,18 @@ document.getElementById('openQuoteForm').addEventListener('click', function() {
 
 ```javascript
 const popup = new QuoteFormPopup({
-    baseUrl: 'https://votre-domaine.com',    // URL de base de votre serveur
-    popupUrl: '/popup.html',                 // Chemin vers le popup
-    width: 1200,                             // Largeur du popup
-    height: 800,                             // Hauteur du popup
-    onFormSubmit: function(data) {           // Callback de soumission
-        console.log('Données reçues:', data);
-    },
-    onClose: function() {                    // Callback de fermeture
-        console.log('Popup fermé');
-    }
+  baseUrl: 'https://votre-domaine.com', // URL de base de votre serveur
+  popupUrl: '/popup.html', // Chemin vers le popup
+  width: 1200, // Largeur du popup
+  height: 800, // Hauteur du popup
+  onFormSubmit: function (data) {
+    // Callback de soumission
+    console.log('Données reçues:', data);
+  },
+  onClose: function () {
+    // Callback de fermeture
+    console.log('Popup fermé');
+  },
 });
 ```
 
@@ -64,13 +66,13 @@ const popup = new QuoteFormPopup({
 <button id="quoteButton">Demander un devis</button>
 
 <script>
-document.getElementById('quoteButton').addEventListener('click', function() {
+  document.getElementById('quoteButton').addEventListener('click', function () {
     openQuoteFormPopup({
-        onFormSubmit: function(data) {
-            alert('Merci pour votre demande !');
-        }
+      onFormSubmit: function (data) {
+        alert('Merci pour votre demande !');
+      },
     });
-});
+  });
 </script>
 ```
 
@@ -80,26 +82,26 @@ document.getElementById('quoteButton').addEventListener('click', function() {
 <a href="#" id="quoteLink">Demander un devis</a>
 
 <script>
-document.getElementById('quoteLink').addEventListener('click', function(e) {
+  document.getElementById('quoteLink').addEventListener('click', function (e) {
     e.preventDefault();
-    
+
     try {
-        openQuoteFormPopup({
-            onFormSubmit: function(data) {
-                // Envoyer les données à votre serveur
-                fetch('/api/leads', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-            }
-        });
+      openQuoteFormPopup({
+        onFormSubmit: function (data) {
+          // Envoyer les données à votre serveur
+          fetch('/api/leads', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+        },
+      });
     } catch (error) {
-        alert('Impossible d\'ouvrir le formulaire. Vérifiez que les popups ne sont pas bloquées.');
+      alert("Impossible d'ouvrir le formulaire. Vérifiez que les popups ne sont pas bloquées.");
     }
-});
+  });
 </script>
 ```
 
@@ -107,35 +109,35 @@ document.getElementById('quoteLink').addEventListener('click', function(e) {
 
 ```html
 <form id="contactForm">
-    <input type="text" name="name" placeholder="Nom" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <button type="submit">Envoyer</button>
-    <button type="button" id="quoteButton">Demander un devis</button>
+  <input type="text" name="name" placeholder="Nom" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <button type="submit">Envoyer</button>
+  <button type="button" id="quoteButton">Demander un devis</button>
 </form>
 
 <script>
-// Ouvrir le popup de devis
-document.getElementById('quoteButton').addEventListener('click', function() {
+  // Ouvrir le popup de devis
+  document.getElementById('quoteButton').addEventListener('click', function () {
     openQuoteFormPopup({
-        onFormSubmit: function(quoteData) {
-            // Combiner avec les données du formulaire existant
-            const formData = new FormData(document.getElementById('contactForm'));
-            const combinedData = {
-                contact: Object.fromEntries(formData),
-                quote: quoteData
-            };
-            
-            // Envoyer les données combinées
-            fetch('/api/contact-with-quote', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(combinedData)
-            });
-        }
+      onFormSubmit: function (quoteData) {
+        // Combiner avec les données du formulaire existant
+        const formData = new FormData(document.getElementById('contactForm'));
+        const combinedData = {
+          contact: Object.fromEntries(formData),
+          quote: quoteData,
+        };
+
+        // Envoyer les données combinées
+        fetch('/api/contact-with-quote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(combinedData),
+        });
+      },
     });
-});
+  });
 </script>
 ```
 
@@ -144,21 +146,24 @@ document.getElementById('quoteButton').addEventListener('click', function() {
 ```javascript
 // Ouvrir le popup avec des données pré-remplies
 const popup = new QuoteFormPopup({
-    onFormSubmit: function(data) {
-        console.log('Données du formulaire:', data);
-    }
+  onFormSubmit: function (data) {
+    console.log('Données du formulaire:', data);
+  },
 });
 
 // Pré-remplir le formulaire (nécessite modification du composant)
 popup.open();
-popup.popup.postMessage({
+popup.popup.postMessage(
+  {
     type: 'prefillData',
     data: {
-        origin: 'France',
-        destination: 'Chine',
-        // ... autres données
-    }
-}, '*');
+      origin: 'France',
+      destination: 'Chine',
+      // ... autres données
+    },
+  },
+  '*'
+);
 ```
 
 ## 🔧 API avancée
@@ -176,7 +181,7 @@ popup.close();
 
 // Vérifier si le popup est ouvert
 if (popup.isOpen) {
-    console.log('Le popup est ouvert');
+  console.log('Le popup est ouvert');
 }
 ```
 
@@ -184,33 +189,33 @@ if (popup.isOpen) {
 
 ```javascript
 const popup = new QuoteFormPopup({
-    onFormSubmit: function(data) {
-        // Traitement des données
-        console.log('Données reçues:', data);
-        
-        // Exemple: envoi à un webhook
-        fetch('https://votre-webhook.com/leads', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                source: 'popup',
-                data: data,
-                timestamp: new Date().toISOString()
-            })
-        });
-    },
-    
-    onClose: function() {
-        // Actions à effectuer à la fermeture
-        console.log('Popup fermé');
-        
-        // Exemple: tracking analytics
-        gtag('event', 'popup_closed', {
-            event_category: 'engagement'
-        });
-    }
+  onFormSubmit: function (data) {
+    // Traitement des données
+    console.log('Données reçues:', data);
+
+    // Exemple: envoi à un webhook
+    fetch('https://votre-webhook.com/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        source: 'popup',
+        data: data,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+  },
+
+  onClose: function () {
+    // Actions à effectuer à la fermeture
+    console.log('Popup fermé');
+
+    // Exemple: tracking analytics
+    gtag('event', 'popup_closed', {
+      event_category: 'engagement',
+    });
+  },
 });
 ```
 
@@ -221,18 +226,18 @@ const popup = new QuoteFormPopup({
 ```css
 /* Personnaliser l'apparence du popup */
 .popup-container {
-    border-radius: 16px !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
 }
 
 .popup-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    color: white !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
 }
 
 .popup-title {
-    font-size: 20px !important;
-    font-weight: 700 !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
 }
 ```
 
@@ -244,24 +249,26 @@ Assurez-vous que votre serveur autorise les requêtes depuis vos domaines :
 
 ```javascript
 // Exemple de configuration CORS pour Express.js
-app.use(cors({
+app.use(
+  cors({
     origin: ['https://votre-domaine.com', 'https://autre-domaine.com'],
-    credentials: true
-}));
+    credentials: true,
+  })
+);
 ```
 
 ### Validation des messages
 
 ```javascript
 // Vérifier l'origine des messages
-window.addEventListener('message', function(event) {
-    // Vérifier que le message vient de votre domaine
-    if (event.origin !== 'https://votre-domaine.com') {
-        return;
-    }
-    
-    // Traiter le message
-    console.log('Message reçu:', event.data);
+window.addEventListener('message', function (event) {
+  // Vérifier que le message vient de votre domaine
+  if (event.origin !== 'https://votre-domaine.com') {
+    return;
+  }
+
+  // Traiter le message
+  console.log('Message reçu:', event.data);
 });
 ```
 
@@ -286,10 +293,10 @@ Le popup s'adapte automatiquement aux différentes tailles d'écran :
 ```javascript
 // Activer le mode debug
 const popup = new QuoteFormPopup({
-    debug: true, // Affiche les logs dans la console
-    onFormSubmit: function(data) {
-        console.log('Données reçues:', data);
-    }
+  debug: true, // Affiche les logs dans la console
+  onFormSubmit: function (data) {
+    console.log('Données reçues:', data);
+  },
 });
 ```
 
