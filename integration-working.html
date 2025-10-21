@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intégration Fonctionnelle - Formulaire Popup</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .code-block {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        
+        .status {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 500;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Intégration Fonctionnelle du Formulaire Popup</h1>
+        
+        <p>
+            Cette page utilise la page <code>embed.html</code> existante pour ouvrir le formulaire en popup.
+            Cliquez sur les boutons ci-dessous pour tester.
+        </p>
+        
+        <div class="button-group">
+            <button class="btn btn-primary" id="openQuoteForm">
+                📋 Demander un devis
+            </button>
+            
+            <button class="btn btn-secondary" id="openQuoteFormCustom">
+                ⚙️ Popup personnalisée
+            </button>
+            
+            <button class="btn btn-success" id="openQuoteFormWithCallback">
+                📊 Avec callback
+            </button>
+        </div>
+        
+        <div id="status"></div>
+        
+        <h2>💻 Code d'intégration</h2>
+        
+        <h3>1. HTML de base</h3>
+        <div class="code-block">
+&lt;button id="openQuoteForm"&gt;Demander un devis&lt;/button&gt;
+&lt;script src="https://lucasarlot.github.io/sino-form/scripts/popup-integration-fixed.js"&gt;&lt;/script&gt;
+        </div>
+        
+        <h3>2. JavaScript simple</h3>
+        <div class="code-block">
+document.getElementById('openQuoteForm').addEventListener('click', function() {
+    openQuoteFormPopup({
+        onFormSubmit: function(data) {
+            console.log('Formulaire soumis:', data);
+            alert('Merci pour votre demande !');
+        }
+    });
+});
+        </div>
+        
+        <h3>3. Avec gestion d'erreur</h3>
+        <div class="code-block">
+try {
+    openQuoteFormPopup({
+        baseUrl: 'https://lucasarlot.github.io/sino-form',
+        onFormSubmit: function(data) {
+            // Envoyer les données à votre serveur
+            fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        },
+        onClose: function() {
+            console.log('Popup fermé');
+        }
+    });
+} catch (error) {
+    alert('Impossible d\'ouvrir le formulaire');
+}
+        </div>
+        
+        <h3>4. Intégration automatique avec data-attributes</h3>
+        <div class="code-block">
+&lt;button data-quote-form&gt;Demander un devis&lt;/button&gt;
+&lt;script src="https://lucasarlot.github.io/sino-form/scripts/popup-integration-fixed.js"&gt;&lt;/script&gt;
+        </div>
+    </div>
+
+    <!-- Script d'intégration corrigé -->
+    <script src="scripts/popup-integration-fixed.js"></script>
+    
+    <script>
+        // Configuration de base
+        const baseUrl = 'https://lucasarlot.github.io/sino-form';
+        
+        // Bouton simple
+        document.getElementById('openQuoteForm').addEventListener('click', function() {
+            try {
+                openQuoteFormPopup({
+                    baseUrl: baseUrl,
+                    onFormSubmit: function(data) {
+                        showStatus('success', '✅ Formulaire soumis avec succès !');
+                        console.log('Données reçues:', data);
+                    },
+                    onClose: function() {
+                        showStatus('info', 'ℹ️ Popup fermée');
+                    }
+                });
+            } catch (error) {
+                showStatus('error', '❌ Erreur: ' + error.message);
+            }
+        });
+        
+        // Popup personnalisée
+        document.getElementById('openQuoteFormCustom').addEventListener('click', function() {
+            try {
+                openQuoteFormPopup({
+                    baseUrl: baseUrl,
+                    width: 1400,
+                    height: 900,
+                    onFormSubmit: function(data) {
+                        showStatus('success', '✅ Popup personnalisée - Formulaire soumis !');
+                    }
+                });
+            } catch (error) {
+                showStatus('error', '❌ Erreur: ' + error.message);
+            }
+        });
+        
+        // Avec callback avancé
+        document.getElementById('openQuoteFormWithCallback').addEventListener('click', function() {
+            try {
+                const popup = new QuoteFormPopup({
+                    baseUrl: baseUrl,
+                    onFormSubmit: function(data) {
+                        showStatus('success', '✅ Données reçues et traitées !');
+                        
+                        // Simulation d'envoi à un serveur
+                        setTimeout(() => {
+                            showStatus('success', '📤 Données envoyées au serveur');
+                        }, 1000);
+                    },
+                    onClose: function() {
+                        showStatus('info', 'ℹ️ Popup fermée - Session terminée');
+                    }
+                });
+                
+                popup.open();
+                
+            } catch (error) {
+                showStatus('error', '❌ Erreur: ' + error.message);
+            }
+        });
+        
+        // Fonction pour afficher le statut
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            
+            // Effacer après 5 secondes
+            setTimeout(() => {
+                statusDiv.textContent = '';
+                statusDiv.className = '';
+            }, 5000);
+        }
+        
+        // Vérifier si le script est chargé
+        if (typeof openQuoteFormPopup === 'undefined') {
+            showStatus('error', '❌ Script d\'intégration non chargé. Vérifiez le chemin du fichier.');
+        } else {
+            showStatus('success', '✅ Script d\'intégration chargé avec succès !');
+        }
+    </script>
+</body>
+</html>
