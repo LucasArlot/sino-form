@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple d'intégration - Formulaire SINOFORM</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+        }
+        
+        .demo-section h2 {
+            color: #666;
+            margin-top: 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Styles pour le popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+        }
+        
+        .popup-container {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+        
+        .popup-close:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .popup-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .code-example pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚢 SINOFORM - Exemple d'intégration</h1>
+        
+        <div class="demo-section">
+            <h2>1. Bouton avec popup (Recommandé)</h2>
+            <p>Cliquez sur le bouton pour ouvrir le formulaire dans un popup responsive :</p>
+            <button class="btn" onclick="openFormPopup()">
+                📋 Obtenir un devis de transport
+            </button>
+        </div>
+        
+        <div class="demo-section">
+            <h2>2. Intégration directe en iframe</h2>
+            <p>Le formulaire intégré directement dans la page :</p>
+            <div style="border: 2px solid #ddd; border-radius: 8px; overflow: hidden; height: 600px;">
+                <iframe 
+                    src="embed.html" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0"
+                    title="Formulaire SINOFORM">
+                </iframe>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>3. Code d'intégration</h2>
+            <p>Voici le code HTML/JavaScript pour intégrer le formulaire sur votre site :</p>
+            
+            <div class="code-example">
+                <h3>HTML - Bouton et popup</h3>
+                <pre><code>&lt;!-- Bouton pour ouvrir le formulaire --&gt;
+&lt;button class="btn" onclick="openFormPopup()"&gt;
+    📋 Obtenir un devis de transport
+&lt;/button&gt;
+
+&lt;!-- Popup overlay --&gt;
+&lt;div class="popup-overlay" id="formPopup"&gt;
+    &lt;div class="popup-container"&gt;
+        &lt;button class="popup-close" onclick="closeFormPopup()"&gt;×&lt;/button&gt;
+        &lt;iframe 
+            src="<span class="highlight">https://votre-domaine.com/embed.html</span>" 
+            class="popup-iframe"
+            title="Formulaire SINOFORM"&gt;
+        &lt;/iframe&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>CSS - Styles du popup</h3>
+                <pre><code>&lt;style&gt;
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-overlay.active {
+    display: flex;
+}
+
+.popup-container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 1001;
+}
+
+.popup-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+&lt;/style&gt;</code></pre>
+            </div>
+            
+            <div class="code-example">
+                <h3>JavaScript - Fonctions de contrôle</h3>
+                <pre><code>&lt;script&gt;
+function openFormPopup() {
+    const popup = document.getElementById('formPopup');
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Empêcher le scroll de la page
+    
+    // Notifier l'iframe du redimensionnement
+    const iframe = popup.querySelector('iframe');
+    iframe.onload = function() {
+        iframe.contentWindow.postMessage({ type: 'resize' }, '*');
+    };
+}
+
+function closeFormPopup() {
+    const popup = document.getElementById('formPopup');
+    popup.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restaurer le scroll
+}
+
+// Fermer avec la touche Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeFormPopup();
+    }
+});
+
+// Fermer en cliquant sur l'overlay
+document.getElementById('formPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeFormPopup();
+    }
+});
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>4. Fonctionnalités du système de scaling</h2>
+            <ul>
+                <li><strong>Responsive automatique :</strong> Le formulaire s'adapte automatiquement à la taille d'écran</li>
+                <li><strong>Breakpoints :</strong> 
+                    <ul>
+                        <li>≥ 2560px (32") : 100% (taille optimale)</li>
+                        <li>1920-2559px (27") : 85%</li>
+                        <li>1440-1919px (24") : 75%</li>
+                        <li>&lt; 1440px : 65%</li>
+                    </ul>
+                </li>
+                <li><strong>Effet zoom :</strong> Tout le formulaire (textes, boutons, espacements) se réduit proportionnellement</li>
+                <li><strong>Détection automatique :</strong> L'iframe détecte la taille de l'écran parent et s'adapte</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Popup pour le formulaire -->
+    <div class="popup-overlay" id="formPopup">
+        <div class="popup-container">
+            <button class="popup-close" onclick="closeFormPopup()">×</button>
+            <iframe 
+                src="embed.html" 
+                class="popup-iframe"
+                title="Formulaire SINOFORM">
+            </iframe>
+        </div>
+    </div>
+    
+    <script>
+        function openFormPopup() {
+            const popup = document.getElementById('formPopup');
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Empêcher le scroll de la page
+            
+            // Notifier l'iframe du redimensionnement
+            const iframe = popup.querySelector('iframe');
+            iframe.onload = function() {
+                iframe.contentWindow.postMessage({ type: 'resize' }, '*');
+            };
+        }
+        
+        function closeFormPopup() {
+            const popup = document.getElementById('formPopup');
+            popup.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restaurer le scroll
+        }
+        
+        // Fermer avec la touche Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFormPopup();
+            }
+        });
+        
+        // Fermer en cliquant sur l'overlay
+        document.getElementById('formPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFormPopup();
+            }
+        });
+    </script>
+</body>
+</html>

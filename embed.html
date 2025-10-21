@@ -11,15 +11,89 @@
         padding: 0;
         font-family: 'Inter', sans-serif;
         background: transparent;
+        overflow: hidden;
       }
       #root {
         width: 100%;
         height: 100vh;
       }
+      .embed-container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        transform-origin: top center;
+        transition: transform 0.3s ease;
+      }
+      .embed-content {
+        width: 100%;
+        height: 100%;
+      }
     </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/embed.tsx"></script>
+    <div class="embed-container">
+      <div class="embed-content">
+        <div id="root"></div>
+      </div>
+    </div>
+    
+    <script>
+      // Système de scaling responsive
+      function applyResponsiveScaling() {
+        const container = document.querySelector('.embed-container');
+        let parentWidth;
+        
+        try {
+          // Essayer de détecter la largeur de l'écran parent
+          if (window.parent && window.parent !== window) {
+            parentWidth = window.parent.innerWidth;
+          } else if (window.top && window.top !== window) {
+            parentWidth = window.top.innerWidth;
+          } else {
+            parentWidth = window.screen.width;
+          }
+        } catch (e) {
+          // Fallback si on ne peut pas accéder au parent
+          parentWidth = window.screen.width;
+        }
+        
+        let scale = 1;
+        
+        // Breakpoints de scaling
+        if (parentWidth >= 2560) {
+          scale = 1; // 100% - taille optimale pour 32"
+        } else if (parentWidth >= 1920) {
+          scale = 0.85; // 85% pour 27"
+        } else if (parentWidth >= 1440) {
+          scale = 0.75; // 75% pour 24"
+        } else {
+          scale = 0.65; // 65% pour écrans plus petits
+        }
+        
+        // Appliquer le scaling
+        container.style.transform = `scale(${scale})`;
+        
+        // Ajuster la hauteur du conteneur pour compenser le scaling
+        const scaledHeight = 100 / scale;
+        container.style.height = `${scaledHeight}vh`;
+      }
+      
+      // Appliquer le scaling au chargement
+      document.addEventListener('DOMContentLoaded', applyResponsiveScaling);
+      
+      // Réappliquer le scaling si la fenêtre est redimensionnée
+      window.addEventListener('resize', applyResponsiveScaling);
+      
+      // Écouter les messages du parent pour les mises à jour
+      window.addEventListener('message', function(event) {
+        if (event.data && event.data.type === 'resize') {
+          applyResponsiveScaling();
+        }
+      });
+    </script>
+    
+    <script type="module" crossorigin src="./assets/embed-qZ3heHty.js"></script>
   </body>
 </html>
