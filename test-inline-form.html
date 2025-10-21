@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Formulaire Inline - SINOFORM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .demo-section h2 {
+            color: #666;
+            margin-top: 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Container pour le formulaire inline */
+        #form-container {
+            min-height: 600px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            margin: 20px 0;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Formulaire Inline - SINOFORM</h1>
+        
+        <div id="status"></div>
+        
+        <div class="demo-section">
+            <h2>📋 Intégration directe du formulaire</h2>
+            <p>Le formulaire sera injecté directement dans la zone ci-dessous, sans popup, sans page wrapper :</p>
+            
+            <button class="btn" onclick="injectForm()">
+                📋 Injecter le formulaire
+            </button>
+            
+            <button class="btn" onclick="removeForm()">
+                🗑️ Supprimer le formulaire
+            </button>
+            
+            <button class="btn" onclick="checkStatus()">
+                🔍 Vérifier le statut
+            </button>
+        </div>
+        
+        <!-- Container pour le formulaire -->
+        <div id="form-container">
+            <p style="text-align: center; color: #999; padding: 50px;">
+                Cliquez sur "Injecter le formulaire" pour voir le formulaire ici
+            </p>
+        </div>
+        
+        <div class="demo-section">
+            <h2>💻 Code d'intégration</h2>
+            <pre style="background: #f8f9fa; padding: 20px; border-radius: 4px; overflow-x: auto;">
+&lt;!-- HTML --&gt;
+&lt;div id="mon-formulaire"&gt;&lt;/div&gt;
+
+&lt;!-- JavaScript --&gt;
+&lt;script src="https://lucasarlot.github.io/sino-form/sino-form-inline.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  // Injecter le formulaire dans un élément
+  window.SinoFormInline.inject('#mon-formulaire');
+  
+  // Ou injecter dans un élément JavaScript
+  const container = document.getElementById('mon-formulaire');
+  window.SinoFormInline.inject(container);
+&lt;/script&gt;
+            </pre>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function injectForm() {
+            if (window.SinoFormInline) {
+                window.SinoFormInline.inject('#form-container');
+                updateStatus('✅ Formulaire injecté avec succès !');
+            } else {
+                updateStatus('❌ API SinoFormInline non disponible. Le script n\'est pas chargé.', 'error');
+            }
+        }
+
+        function removeForm() {
+            if (window.SinoFormInline) {
+                window.SinoFormInline.remove();
+                document.getElementById('form-container').innerHTML = 
+                    '<p style="text-align: center; color: #999; padding: 50px;">Cliquez sur "Injecter le formulaire" pour voir le formulaire ici</p>';
+                updateStatus('✅ Formulaire supprimé !');
+            } else {
+                updateStatus('❌ API SinoFormInline non disponible.', 'error');
+            }
+        }
+
+        function checkStatus() {
+            if (window.SinoFormInline) {
+                const isInjected = window.SinoFormInline.isInjected();
+                updateStatus(`✅ API disponible ! Formulaire injecté: ${isInjected ? 'Oui' : 'Non'}`);
+            } else {
+                updateStatus('❌ API SinoFormInline non disponible.', 'error');
+            }
+        }
+
+        // Vérifier le chargement du script
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.SinoFormInline) {
+                    updateStatus('✅ Script chargé avec succès !');
+                } else {
+                    updateStatus('❌ Échec du chargement du script.', 'error');
+                }
+            }, 1000);
+        });
+    </script>
+    
+    <!-- Charger le script inline -->
+    <script src="https://lucasarlot.github.io/sino-form/sino-form-inline.js"></script>
+</body>
+</html>

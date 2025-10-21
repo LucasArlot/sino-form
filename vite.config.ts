@@ -12,7 +12,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         embed: resolve(__dirname, 'embed.html'),
         widget: resolve(__dirname, 'src/widget.ts'),
-        'widget-app': resolve(__dirname, 'widget.html')
+        'widget-app': resolve(__dirname, 'widget.html'),
+        'widget-inline': resolve(__dirname, 'src/widget-inline.ts'),
       },
       output: {
         manualChunks: (id) => {
@@ -41,11 +42,17 @@ export default defineConfig({
           if (chunkInfo.name === 'widget') {
             return 'sino-form-widget.js';
           }
+          if (chunkInfo.name === 'widget-inline') {
+            return 'sino-form-inline.js';
+          }
           return 'assets/[name]-[hash].js';
         },
         chunkFileNames: (chunkInfo) => {
           if (chunkInfo.name === 'widget') {
             return 'sino-form-widget.js';
+          }
+          if (chunkInfo.name === 'widget-inline') {
+            return 'sino-form-inline.js';
           }
           return 'assets/[name]-[hash].js';
         },

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Widget SINOFORM - Local</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Widget SINOFORM - Version Widget Pure</h1>
+        
+        <div id="status"></div>
+        
+        <button class="btn" onclick="testWidget()">
+            📋 Tester le widget (version widget.html)
+        </button>
+        
+        <button class="btn" onclick="testEmbed()">
+            📋 Tester l'ancien embed.html
+        </button>
+        
+        <button class="btn" onclick="checkAPI()">
+            🔍 Vérifier l'API
+        </button>
+    </div>
+
+    <script>
+        function updateStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function checkAPI() {
+            if (window.SinoForm) {
+                updateStatus('✅ API SinoForm disponible !<br>Méthodes: open(), close(), isOpen()');
+            } else {
+                updateStatus('❌ API SinoForm non disponible. Le script n\'est pas chargé.', 'error');
+            }
+        }
+
+        function testWidget() {
+            if (window.SinoForm) {
+                // Modifier temporairement l'URL pour pointer vers widget.html
+                const originalSrc = window.SinoForm.iframe?.src;
+                if (window.SinoForm.iframe) {
+                    window.SinoForm.iframe.src = 'widget.html';
+                }
+                window.SinoForm.open();
+                updateStatus('✅ Widget ouvert avec widget.html ! Fermez-le avec Escape ou le bouton X.');
+            } else {
+                updateStatus('❌ Impossible d\'ouvrir le widget. API non disponible.', 'error');
+            }
+        }
+
+        function testEmbed() {
+            if (window.SinoForm) {
+                // Utiliser l'URL embed.html originale
+                if (window.SinoForm.iframe) {
+                    window.SinoForm.iframe.src = 'https://lucasarlot.github.io/sino-form/embed.html';
+                }
+                window.SinoForm.open();
+                updateStatus('✅ Widget ouvert avec embed.html ! Fermez-le avec Escape ou le bouton X.');
+            } else {
+                updateStatus('❌ Impossible d\'ouvrir le widget. API non disponible.', 'error');
+            }
+        }
+
+        // Vérifier le chargement du script
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.SinoForm) {
+                    updateStatus('✅ Widget chargé avec succès !');
+                } else {
+                    updateStatus('❌ Échec du chargement du widget.', 'error');
+                }
+            }, 1000);
+        });
+    </script>
+    
+    <!-- Charger le widget depuis GitHub Pages -->
+    <script src="https://lucasarlot.github.io/sino-form/sino-form-widget.js"></script>
+</body>
+</html>

@@ -78,13 +78,15 @@ function WidgetApp() {
         margin: 0,
       }}
     >
-      <div style={{ 
-        width: '100%', 
-        height: '100%',
-        background: 'transparent',
-        padding: 0,
-        margin: 0,
-      }}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          background: 'transparent',
+          padding: 0,
+          margin: 0,
+        }}
+      >
         <QuoteFormProvider>
           <QuoteForm />
         </QuoteFormProvider>
