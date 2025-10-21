@@ -19,7 +19,7 @@ class SinoFormPopup implements SinoFormWidget {
   private init(): void {
     // Create the popup HTML structure
     this.createPopupHTML();
-    
+
     // Bind event listeners
     this.bindEvents();
   }
@@ -36,33 +36,33 @@ class SinoFormPopup implements SinoFormWidget {
     this.popup = document.createElement('div');
     this.popup.id = 'sino-form-popup';
     this.popup.className = 'sino-form-overlay';
-    
+
     // Create popup content
     const popupContent = document.createElement('div');
     popupContent.className = 'sino-form-container';
-    
+
     // Create close button
     const closeButton = document.createElement('button');
     closeButton.className = 'sino-form-close';
     closeButton.innerHTML = '×';
     closeButton.setAttribute('aria-label', 'Fermer le formulaire');
-    
+
     // Create iframe
     this.iframe = document.createElement('iframe');
     this.iframe.className = 'sino-form-iframe';
-    this.iframe.src = 'https://lucasarlot.github.io/sino-form/embed.html';
+    this.iframe.src = 'https://lucasarlot.github.io/sino-form/widget.html';
     this.iframe.title = 'Formulaire de devis SINOFORM';
     this.iframe.setAttribute('frameborder', '0');
     this.iframe.setAttribute('allowfullscreen', 'true');
-    
+
     // Assemble the popup
     popupContent.appendChild(closeButton);
     popupContent.appendChild(this.iframe);
     this.popup.appendChild(popupContent);
-    
+
     // Add to document
     document.body.appendChild(this.popup);
-    
+
     // Add styles
     this.addStyles();
   }
@@ -164,7 +164,7 @@ class SinoFormPopup implements SinoFormWidget {
         }
       }
     `;
-    
+
     document.head.appendChild(style);
   }
 
@@ -200,13 +200,13 @@ class SinoFormPopup implements SinoFormWidget {
 
   public open(): void {
     if (!this.popup) return;
-    
+
     if (this.isPopupOpen) return; // Prevent multiple opens
-    
+
     this.isPopupOpen = true;
     this.popup.classList.add('active');
     document.body.style.overflow = 'hidden'; // Prevent body scroll
-    
+
     // Focus management for accessibility
     const closeButton = this.popup.querySelector('.sino-form-close') as HTMLElement;
     closeButton?.focus();
@@ -214,7 +214,7 @@ class SinoFormPopup implements SinoFormWidget {
 
   public close(): void {
     if (!this.popup || !this.isPopupOpen) return;
-    
+
     this.isPopupOpen = false;
     this.popup.classList.remove('active');
     document.body.style.overflow = 'auto'; // Restore body scroll
@@ -238,7 +238,7 @@ declare global {
 window.SinoForm = {
   open: () => sinoFormPopup.open(),
   close: () => sinoFormPopup.close(),
-  isOpen: () => sinoFormPopup.isOpen()
+  isOpen: () => sinoFormPopup.isOpen(),
 };
 
 // Auto-initialize if DOM is ready

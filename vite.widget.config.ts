@@ -9,14 +9,14 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/widget.ts'),
       name: 'SinoForm',
       fileName: 'sino-form-widget',
-      formats: ['iife']
+      formats: ['iife'],
     },
     rollupOptions: {
       output: {
         // Ensure single file output
         inlineDynamicImports: true,
         manualChunks: undefined,
-      }
+      },
     },
     // Minify for production
     minify: 'terser',
@@ -25,6 +25,6 @@ export default defineConfig({
     emptyOutDir: false,
   },
   define: {
-    'process.env.NODE_ENV': '"production"'
-  }
+    'process.env.NODE_ENV': '"production"',
+  },
 });

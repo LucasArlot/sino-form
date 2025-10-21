@@ -32,13 +32,15 @@ Vous pouvez utiliser n'importe quel élément HTML pour déclencher l'ouverture 
 </button>
 
 <!-- Lien personnalisé -->
-<a href="#" onclick="window.SinoForm.open(); return false;">
-  Cliquez ici pour un devis
-</a>
+<a href="#" onclick="window.SinoForm.open(); return false;"> Cliquez ici pour un devis </a>
 
 <!-- Image cliquable -->
-<img src="devis-button.png" onclick="window.SinoForm.open()" 
-     style="cursor: pointer;" alt="Obtenir un devis">
+<img
+  src="devis-button.png"
+  onclick="window.SinoForm.open()"
+  style="cursor: pointer;"
+  alt="Obtenir un devis"
+/>
 ```
 
 ### Styles CSS pour votre bouton
@@ -84,47 +86,51 @@ if (window.SinoForm.isOpen()) {
 
 ```html
 <script>
-// Ouvrir automatiquement après 5 secondes
-setTimeout(() => {
-  window.SinoForm.open();
-}, 5000);
-
-// Ouvrir sur scroll
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 1000) {
+  // Ouvrir automatiquement après 5 secondes
+  setTimeout(() => {
     window.SinoForm.open();
-  }
-});
+  }, 5000);
 
-// Ouvrir sur sortie de souris (exit intent)
-document.addEventListener('mouseleave', (e) => {
-  if (e.clientY <= 0) {
-    window.SinoForm.open();
-  }
-});
+  // Ouvrir sur scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 1000) {
+      window.SinoForm.open();
+    }
+  });
+
+  // Ouvrir sur sortie de souris (exit intent)
+  document.addEventListener('mouseleave', (e) => {
+    if (e.clientY <= 0) {
+      window.SinoForm.open();
+    }
+  });
 </script>
 ```
 
 ## 🎯 Fonctionnalités
 
 ### ✅ Responsive automatique
+
 - S'adapte à tous les écrans (mobile, tablette, desktop)
 - Breakpoints optimisés pour chaque taille d'écran
 - Interface tactile sur mobile
 
 ### ✅ Accessibilité
+
 - Navigation au clavier (Tab, Escape)
 - Support des lecteurs d'écran
 - Focus management
 - Bouton de fermeture accessible
 
 ### ✅ Performance
+
 - Chargement asynchrone
 - Pas de conflit avec vos scripts existants
 - Code minifié et optimisé
 - Cache navigateur
 
 ### ✅ Sécurité
+
 - Communication sécurisée avec le serveur
 - Pas d'accès aux données de votre site
 - HTTPS obligatoire
@@ -137,11 +143,11 @@ Pour améliorer les performances, vous pouvez précharger le formulaire :
 
 ```html
 <script>
-// Précharger le formulaire au chargement de la page
-window.addEventListener('load', () => {
-  // Le widget se charge automatiquement
-  console.log('Widget SINOFORM prêt');
-});
+  // Précharger le formulaire au chargement de la page
+  window.addEventListener('load', () => {
+    // Le widget se charge automatiquement
+    console.log('Widget SINOFORM prêt');
+  });
 </script>
 ```
 
@@ -149,27 +155,28 @@ window.addEventListener('load', () => {
 
 ```html
 <script>
-// Écouter l'ouverture du formulaire
-const originalOpen = window.SinoForm.open;
-window.SinoForm.open = function() {
-  console.log('Formulaire ouvert');
-  // Votre code personnalisé ici
-  originalOpen();
-};
+  // Écouter l'ouverture du formulaire
+  const originalOpen = window.SinoForm.open;
+  window.SinoForm.open = function () {
+    console.log('Formulaire ouvert');
+    // Votre code personnalisé ici
+    originalOpen();
+  };
 
-// Écouter la fermeture du formulaire
-const originalClose = window.SinoForm.close;
-window.SinoForm.close = function() {
-  console.log('Formulaire fermé');
-  // Votre code personnalisé ici
-  originalClose();
-};
+  // Écouter la fermeture du formulaire
+  const originalClose = window.SinoForm.close;
+  window.SinoForm.close = function () {
+    console.log('Formulaire fermé');
+    // Votre code personnalisé ici
+    originalClose();
+  };
 </script>
 ```
 
 ## 🌐 Compatibilité
 
 ### Navigateurs supportés
+
 - ✅ Chrome 60+
 - ✅ Firefox 60+
 - ✅ Safari 12+
@@ -178,6 +185,7 @@ window.SinoForm.close = function() {
 - ✅ Chrome Mobile 60+
 
 ### Prérequis
+
 - Aucun framework requis
 - Fonctionne avec React, Vue, Angular, jQuery, ou HTML pur
 - Compatible avec tous les CMS (WordPress, Drupal, etc.)
@@ -203,6 +211,7 @@ window.SinoForm.close = function() {
 ## 📞 Support
 
 Pour toute question ou problème :
+
 - 📧 Email : [votre-email]
 - 🐛 Issues : [GitHub Issues]
 - 📖 Documentation : [lien vers la doc complète]

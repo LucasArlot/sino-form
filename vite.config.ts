@@ -11,7 +11,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         embed: resolve(__dirname, 'embed.html'),
-        widget: resolve(__dirname, 'src/widget.ts')
+        widget: resolve(__dirname, 'src/widget.ts'),
+        'widget-app': resolve(__dirname, 'widget.html')
       },
       output: {
         manualChunks: (id) => {
@@ -24,9 +25,11 @@ export default defineConfig({
               return 'ui-icons';
             }
           }
-          if (id.includes('@/features/lead/context/i18n') || 
-              id.includes('@/features/lead/context/ports') || 
-              id.includes('@/features/lead/context/types')) {
+          if (
+            id.includes('@/features/lead/context/i18n') ||
+            id.includes('@/features/lead/context/ports') ||
+            id.includes('@/features/lead/context/types')
+          ) {
             return 'lead-context';
           }
           if (id.includes('@/features/lead/context/QuoteFormContext')) {
