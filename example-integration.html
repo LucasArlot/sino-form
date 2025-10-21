@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple d'Intégration - SINO Form Popup</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .status.success {
+            background: #d1fae5;
+            border-left-color: #10b981;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+        
+        .code-example {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature h3 {
+            margin: 0 0 10px 0;
+            color: #1f2937;
+        }
+        
+        .feature p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SINO Form Popup Integration</h1>
+        <p>Testez l'intégration du formulaire en popup sur votre site</p>
+        
+        <div class="demo-buttons">
+            <button class="btn btn-primary" onclick="openForm()">
+                📝 Ouvrir le Formulaire
+            </button>
+            <button class="btn btn-secondary" onclick="checkStatus()">
+                ℹ️ Vérifier le Statut
+            </button>
+            <button class="btn btn-success" onclick="closeForm()">
+                ❌ Fermer le Formulaire
+            </button>
+        </div>
+        
+        <div id="status" class="status" style="display: none;">
+            <strong>Statut:</strong> <span id="status-text">En attente...</span>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🎯 Intégration Simple</h3>
+                <p>Un seul script à inclure, une seule fonction à appeler</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Responsive</h3>
+                <p>Fonctionne parfaitement sur mobile, tablette et desktop</p>
+            </div>
+            <div class="feature">
+                <h3>🔄 Callbacks</h3>
+                <p>Écoutez les événements de soumission et de fermeture</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 Personnalisable</h3>
+                <p>Styles et comportements entièrement personnalisables</p>
+            </div>
+        </div>
+        
+        <h2>Code d'Intégration</h2>
+        <div class="code-example">
+&lt;!-- 1. Inclure le script --&gt;
+&lt;script src="https://lucasarlot.github.io/sino-form/popup-integration.js"&gt;&lt;/script&gt;
+
+&lt;!-- 2. Ouvrir le formulaire --&gt;
+&lt;script&gt;
+SinoFormPopup.open({
+  onSuccess: (data) => {
+    console.log('Formulaire soumis:', data);
+    // Rediriger vers une page de remerciement
+    // window.location.href = '/merci';
+  },
+  onClose: () => {
+    console.log('Formulaire fermé');
+  },
+  onError: (error) => {
+    console.error('Erreur:', error);
+  }
+});
+&lt;/script&gt;
+        </div>
+    </div>
+
+    <!-- Inclure le script d'intégration -->
+    <script src="./popup-integration.js"></script>
+    
+    <script>
+        let formData = null;
+        
+        function openForm() {
+            updateStatus('Ouverture du formulaire...', 'info');
+            
+            SinoFormPopup.open({
+                onSuccess: (data) => {
+                    formData = data;
+                    updateStatus('Formulaire soumis avec succès!', 'success');
+                    console.log('Données du formulaire:', data);
+                },
+                onClose: () => {
+                    updateStatus('Formulaire fermé', 'info');
+                },
+                onError: (error) => {
+                    updateStatus('Erreur: ' + error.message, 'error');
+                    console.error('Erreur du formulaire:', error);
+                }
+            });
+        }
+        
+        function checkStatus() {
+            const isOpen = SinoFormPopup.isOpen();
+            if (isOpen) {
+                updateStatus('Formulaire ouvert', 'info');
+            } else {
+                updateStatus('Formulaire fermé', 'info');
+            }
+        }
+        
+        function closeForm() {
+            SinoFormPopup.close();
+            updateStatus('Fermeture demandée', 'info');
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+            
+            statusText.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            // Auto-hide after 5 seconds for success/error
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Afficher un message de bienvenue
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('Script chargé et prêt!', 'success');
+        });
+    </script>
+</body>
+</html>
