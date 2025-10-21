@@ -916,7 +916,7 @@ const StepConfirmation: React.FC<StepConfirmationProps> = ({
                 </h4>
               </div>
               <div style={{ color: '#374151', lineHeight: '1.6', fontSize: '0.95rem' }}>
-                <p style={{ margin: '0rem 0', display: 'flex', alignItems: 'center' }}>
+                <p style={{ margin: '0.5rem 0', display: 'flex', alignItems: 'center' }}>
                   <span style={{ fontSize: '1rem', marginRight: '0.5rem' }}>📍</span>
                   <strong>{formData.city || formData.origin}</strong> →{' '}
                   <strong>
